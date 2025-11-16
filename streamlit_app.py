@@ -14,7 +14,6 @@ session = cnx.session()
 
 name_on_order = st.text_input("Name on Smoothie")
 
-session = get_active_session()
 my_dataframe = session.table("smoothies.public.fruit_options").select("FRUIT_NAME")
 #st.dataframe(data=my_dataframe, use_container_width=True)
 
