@@ -13,9 +13,6 @@ from snowflake.snowpark.functions import col
 cnx = st.connection("snowflake")
 session = cnx.session()
 
-smoothiesfroot_response = requests.get("https://www.smoothiefroot.com/api/fruit/watermelon")
-sf_df = st.dataframe(data=smoothiesfroot_response.json(), use_container_width=True)
-
 name_on_order = st.text_input("Name on Smoothie")
 
 my_dataframe = session.table("smoothies.public.fruit_options").select("FRUIT_NAME")
@@ -29,6 +26,9 @@ if ingredients_list:
     ingredients_string = ''
 
     for fruit_chosen in ingredients_list:
+        st.subheader(fruit_chosen + ' Nutrition Information')
+        smoothiesfroot_response = requests.get(f"https://www.smoothiefroot.com/api/fruit/{fruit_chosen}")
+        sf_df = st.dataframe(data=smoothiesfroot_response.json(), use_container_width=True)
         ingredients_string += fruit_chosen + ' '
 
     st.write(ingredients_string)
